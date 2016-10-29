@@ -1,3 +1,4 @@
+
 /**
  * Created by Oleg Serzhant on 15.10.2016.
  */
@@ -7,17 +8,17 @@ class In2Post {
     private String input;
     private String output = "";
 
-    public In2Post(String in) {
+    In2Post(String in) {
         input = in;
         int stackSize = input.length();
         theStack = new Stack<>(stackSize);
     }
 
-    public String doTrans()      // Преобразование в постфиксную форму
+    String doTrans()      // Преобразование в постфиксную форму
     {
         for (int j = 0; j < input.length(); j++) {
             char ch = input.charAt(j);
-            //theStack.displayStack("For " + ch + " ");
+
             switch (ch) {
                 case '+':
                 case '-':
@@ -43,16 +44,16 @@ class In2Post {
         }
         while (!theStack.isEmpty())           // Извлечение оставшихся операторов
         {
-            //theStack.displayStack("While ");
+
             output = output + theStack.pop();
         }
-        //theStack.displayStack("End   ");
+
         return output;                        // Возвращение постфиксного выражения
     }
 
-    public void gotOper(char opThis, int prec1) {       // Чтение оператора из входной строки
+    private void gotOper(char opThis, int prec1) {       // Чтение оператора из входной строки
         while (!theStack.isEmpty()) {
-            char opTop = (char)theStack.pop();
+            char opTop = theStack.pop();
             if (opTop == '(')            // Если это '('
             {
                 theStack.push(opTop);      // Вернуть '('
@@ -76,9 +77,9 @@ class In2Post {
         theStack.push(opThis);               // Занесение в стек нового оператора
     }
 
-    public void gotParen(char ch) {          // Прочитана закрывающая скобка
+    private void gotParen(char ch) {          // Прочитана закрывающая скобка
         while (!theStack.isEmpty()) {
-            char chx = (char)theStack.pop();
+            char chx = theStack.pop();
             if (chx == '(')                  // Если извлечен элемент ‘(‘
                 break;                       // Прервать выполнение
             else                             // Если извлечен оператор
